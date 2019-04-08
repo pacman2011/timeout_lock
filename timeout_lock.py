@@ -50,6 +50,14 @@ class Timeout_Lock(object):
         return self.name + " (NOT Available)"
 
 
+    def __enter__(self):
+        self.acquire()
+        return self
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        self.release()
+
+
     ##############
     # Properties #
     ##############
