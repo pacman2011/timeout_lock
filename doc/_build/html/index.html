@@ -1,0 +1,203 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Timeout_Lock’s Documentation &#8212; timeout_lock 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">timeout_lock 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="timeout-lock-s-documentation">
+<h1>Timeout_Lock’s Documentation<a class="headerlink" href="#timeout-lock-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-timeout_lock"></span><p>A locking mechanism that is similar to <code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Lock</span></code>, but implements Timeout on the
+acquire method via an internal <a class="reference external" href="https://docs.python.org/2.7/library/threading.html#threading.Event" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Event</span></code></a> flag.</p>
+<p>Copyright (C) 2019 Shane Matthijs Boissevain</p>
+<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License along with this program.</p>
+<p>If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
+<dl class="class">
+<dt id="timeout_lock.Timeout_Lock">
+<em class="property">class </em><code class="descclassname">timeout_lock.</code><code class="descname">Timeout_Lock</code><span class="sig-paren">(</span><em>Name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeout_lock.html#Timeout_Lock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#timeout_lock.Timeout_Lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>By implementing an internal <a class="reference external" href="https://docs.python.org/2.7/library/threading.html#threading.Event" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Event</span></code></a> flag as the locking mechanism, it is
+possible to leverage the <a class="reference external" href="https://docs.python.org/2.7/library/threading.html#threading.Event.wait" title="(in Python v2.7)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">threading.Event.wait()</span></code></a> function in order to gracefully wait for
+the lock to become available, while also implementing a timeout feature.</p>
+<dl class="docutils">
+<dt>This is accomplished by “flipping” the internal <a class="reference external" href="https://docs.python.org/2.7/library/threading.html#threading.Event" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Event</span></code></a> flag around.</dt>
+<dd><strong>IE:</strong> When the lock is free, the event is <code class="docutils literal notranslate"><span class="pre">True</span></code>; when locked, the flag is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The name of this lock. Defaults to the class name.</li>
+<li><strong>__event</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/threading.html#threading.Event" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Event</span></code></a>) – The underlying event that actually “controls” the lock mechanism.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="timeout_lock.Timeout_Lock.available">
+<code class="descname">available</code><a class="headerlink" href="#timeout_lock.Timeout_Lock.available" title="Permalink to this definition">¶</a></dt>
+<dd><p>While not useful for acquiring or releasing the lock, provides some use in logging and
+logical tests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if calls to acquire would return immediately and acquire the lock.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="timeout_lock.Timeout_Lock.locked">
+<code class="descname">locked</code><a class="headerlink" href="#timeout_lock.Timeout_Lock.locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>While not useful for acquiring or releasing the lock, provides some use in logging and
+logical tests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if calls to acquire would block.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="timeout_lock.Timeout_Lock.acquire">
+<code class="descname">acquire</code><span class="sig-paren">(</span><em>Timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeout_lock.html#Timeout_Lock.acquire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#timeout_lock.Timeout_Lock.acquire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acquires the lock so that all further calls will either return <code class="docutils literal notranslate"><span class="pre">False</span></code> if the lock is
+not released before Timeout.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Timeout</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Number of seconds to wait for the lock to become available. <code class="docutils literal notranslate"><span class="pre">None</span></code>
+(the default) will block until <a class="reference internal" href="#timeout_lock.Timeout_Lock.release" title="timeout_lock.Timeout_Lock.release"><code class="xref py py-func docutils literal notranslate"><span class="pre">release()</span></code></a> is called.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">A <code class="docutils literal notranslate"><span class="pre">Timeout</span></code> value of <code class="docutils literal notranslate"><span class="pre">None</span></code> can deadlock the application if the lock never becomes
+available.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the lock was acquired. <code class="docutils literal notranslate"><span class="pre">False</span></code> if the lock was not acquired within
+<code class="docutils literal notranslate"><span class="pre">Timeout</span></code> seconds.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="timeout_lock.Timeout_Lock.release">
+<code class="descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeout_lock.html#Timeout_Lock.release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#timeout_lock.Timeout_Lock.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases the lock so that other calls can acquire the lock.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">timeout_lock 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Shane Matthijs Boissevain.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>
